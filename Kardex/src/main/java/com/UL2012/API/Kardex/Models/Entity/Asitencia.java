@@ -3,6 +3,7 @@ package com.UL2012.API.Kardex.Models.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.util.Objects;
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Table(name = "Asistencia")
 public class Asitencia {
 
+    @Id
     @Column(name = "Codigo_Personal")
     private  String Cod_Per;
     @Column(name = "Fecha")

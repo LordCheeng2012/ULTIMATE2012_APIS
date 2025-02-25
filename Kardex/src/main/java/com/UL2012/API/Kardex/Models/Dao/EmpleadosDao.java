@@ -11,4 +11,8 @@ public interface EmpleadosDao extends CrudRepository<Empleados, String> {
     // Método personalizado para validar el parámetro
     @Query("SELECT e FROM Empleados e WHERE e.codigoPersonal = :codigoPersonal")
     Empleados validateParameter(@Param("codigoPersonal") String codigoPersonal);
+
+
+
+
 }

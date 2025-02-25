@@ -1,0 +1,58 @@
+    public Message Init_Session(String User, String Password) {
+        String querySql="{CALL Login_Service(?,?,@msg,@result)};";
+        boolean resultmethod = false ;
+        String msg=null;
+        String result="Iniciando Sesion";
+        try {
+            result ="entro en el try";
+            PreparedStatement prepare=this.cn.prepareStatement(querySql);
+            result ="preparando la consulta";
+            prepare.setString(1, User);
+            prepare.setString(2, Password);
+            result ="asingacion de parametros";
+            prepare.execute();
+            String QueryResult="SELECT @msg as msg,@result as result";
+            ResultSet res = this.cn.createStatement().executeQuery(QueryResult);
+
+            while(res.next()){
+
+                msg= res.getString("msg");
+                result = res.getString("result");
+            }
+            if(msg.equals("FALSE")){
+                System.out.println(" Not Access:" + result);
+                resultmethod=false;
+                //this.Estado=result;
+                prepare.close();
+                message.setMessage(result);
+                message.setIcon("Warning");
+                message.setResult(resultmethod);
+
+            }else if (msg.equals("TRUE")){
+                resultmethod = true;
+                //this.Estado=result;
+                prepare.close();
+                System.out.println("Access: " + resultmethod);
+                message.setMessage(result);
+                message.setIcon("Success");
+                message.setResult(resultmethod);
+
+            }else{
+                resultmethod=false;
+                System.out.println(" Not Access Error:" + result);
+                //this.Estado=result;
+                prepare.close();
+                message.setMessage(result);
+                message.setIcon("error");
+                message.setResult(resultmethod);
+
+            }
+        }
+        catch(Exception ex){
+            System.out.println("Hubo un error en la ejecucion del metodo : "+ex.getMessage());
+            result="ocurrio un error interno en el servidor";
+        }
+        //this.Estado=result;
+
+        return message;
+    }

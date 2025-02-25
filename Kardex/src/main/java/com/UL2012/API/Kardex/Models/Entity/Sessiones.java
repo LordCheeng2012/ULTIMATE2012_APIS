@@ -2,11 +2,13 @@ package com.UL2012.API.Kardex.Models.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "login_adms")
 public class Sessiones {
+    @Id
     @Column(name = "Codigo_Personal")
     private  String Codigo_Personal;
     @Column(name = "User_Name")
