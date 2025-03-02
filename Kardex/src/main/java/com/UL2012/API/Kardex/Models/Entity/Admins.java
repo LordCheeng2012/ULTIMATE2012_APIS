@@ -1,18 +1,6 @@
 package com.UL2012.API.Kardex.Models.Entity;
-
 import jakarta.persistence.*;
-
 @Entity
-@NamedStoredProcedureQuery(
-        name = "Admins.Login_Service",
-        procedureName = "Login_Service",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "USERNAME", type = String.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "U_Password", type = String.class),
-                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "isVerific", type = String.class),
-                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "msg", type = String.class)
-        }
-)
 @Table(name = "admins")
 
 public class Admins {
@@ -41,6 +29,15 @@ public class Admins {
 
     public String getUsername() {
         return Username;
+    }
+
+    @Override
+    public String toString() {
+        return "Admins{" +
+                "Cod_Per='" + Cod_Per + '\'' +
+                ", Username='" + Username + '\'' +
+                ", Password='" + Password + '\'' +
+                '}';
     }
 
     public void setUsername(String username) {

@@ -15,15 +15,24 @@ import java.util.Map;
 public class ControlerEmpleados {
     @Autowired
     private INT_Empleados Iemp;
-
     //METODOS-> ENDPOINTS
-
     @PostMapping("Empleados/Save")
     public ResponseEntity<?> SaveOrUpdate(@RequestBody Empleados Emp){
         Map<String,Object> Response = new HashMap<>();
+        HttpStatus status = null;
+        if (Emp.getCodigoPersonal() == null || Emp.getNombres() == null) {
+            Response.put("Cod", "ERR01");
+            Response.put("Estado", "False");
+            Response.put("User", Emp.getCodigoPersonal() );
+            Response.put("Password", Emp.getNombres());
+            Response.put("Details", "Usuario o Contraseña no pueden ser nulos O vacios");
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(Response, status);
+        }
         try{
             Response.put("Cod","KAR01");
             Response.put("Message","Se ah creado el Empleado");
+            Response.put("Details",Emp.getCodigoPersonal());
              Iemp.SaveOrUpdateEmpleado(Emp);
              return  new ResponseEntity<>(Response,HttpStatus.CREATED);
         } catch (Exception e  ) {
@@ -33,6 +42,8 @@ public class ControlerEmpleados {
             return  new ResponseEntity<>(Response,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/Empleados")
     public Iterable<Empleados> Empleados(){

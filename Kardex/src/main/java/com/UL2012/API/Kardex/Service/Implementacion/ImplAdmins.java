@@ -1,5 +1,4 @@
 package com.UL2012.API.Kardex.Service.Implementacion;
-import com.UL2012.API.Kardex.Models.Conexion.KardexSystemDb;
 import com.UL2012.API.Kardex.Models.Dao.AdminsDao;
 import com.UL2012.API.Kardex.Models.Entity.Admins;
 import com.UL2012.API.Kardex.Models.Entity.Message;
@@ -8,22 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.List;
+import java.util.*;
+
 @Service
 public class ImplAdmins implements INT_Admins {
 
     @Autowired
     private AdminsDao AdminsDao;
 
+    public ImplAdmins(AdminsDao adminsDao) {
+        AdminsDao = adminsDao;
+    }
 
     @Transactional
     @Override
-    public List<String> Init_Session(String User, String Password) {
-        return AdminsDao.Login_Service(User,Password);
+    public List<Object[]> Init_Session(String username, String password) {
+        List<Object[]> results = AdminsDao.login(username, password);
+        return  results;
+
     }
+
+
+
+
 
     @Override
     public Admins allAdmins() {
