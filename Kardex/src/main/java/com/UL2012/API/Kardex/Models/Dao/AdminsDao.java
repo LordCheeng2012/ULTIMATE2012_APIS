@@ -14,7 +14,4 @@ public interface AdminsDao extends JpaRepository<Admins, String> {
   @Query(value = "CALL Login_Service(:username, :password)", nativeQuery = true)
   List<Object[]> login(@Param("username") String username,
                        @Param("password") String password);
-
-
-
 }
