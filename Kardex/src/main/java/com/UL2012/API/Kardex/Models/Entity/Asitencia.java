@@ -5,7 +5,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,23 +19,6 @@ public class Asitencia {
     private  String Cod_Per;
     @Column(name = "Fecha")
     private  String Fecha;
-
-    @Override
-    public String toString() {
-        return "Asitencia{" +
-                "Cod_Per='" + Cod_Per + '\'' +
-                ", Fecha='" + Fecha + '\'' +
-                ", Area='" + Area + '\'' +
-                ", Carrera='" + Carrera + '\'' +
-                ", Turno='" + Turno + '\'' +
-                ", Rol='" + Rol + '\'' +
-                ", Hora_Ingreso='" + Hora_Ingreso + '\'' +
-                ", Hora_Break='" + Hora_Break + '\'' +
-                ", Retorno_Break='" + Retorno_Break + '\'' +
-                ", Hora_Salida='" + Hora_Salida + '\'' +
-                '}';
-    }
-
     @Column(name = "Area")
     private  String Area;
     @Column(name = "Carrera")
@@ -51,6 +36,22 @@ public class Asitencia {
     @Column(name = "Hora_Sal")
     private  String Hora_Salida;
 
+
+    @Override
+    public String toString() {
+        return "Asitencia{" +
+                "Cod_Per='" + Cod_Per + '\'' +
+                ", Fecha='" + Fecha + '\'' +
+                ", Area='" + Area + '\'' +
+                ", Carrera='" + Carrera + '\'' +
+                ", Turno='" + Turno + '\'' +
+                ", Rol='" + Rol + '\'' +
+                ", Hora_Ingreso='" + Hora_Ingreso + '\'' +
+                ", Hora_Break='" + Hora_Break + '\'' +
+                ", Retorno_Break='" + Retorno_Break + '\'' +
+                ", Hora_Salida='" + Hora_Salida + '\'' +
+                '}';
+    }
     public Asitencia(String cod_Per) {
         Cod_Per = cod_Per;
     }
@@ -137,4 +138,6 @@ public class Asitencia {
     public String getHora_Break() {
         return Hora_Break;
     }
+
+
 }

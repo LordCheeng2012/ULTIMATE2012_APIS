@@ -43,7 +43,6 @@ public class ControlerEmpleados {
         }
     }
 
-
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/Empleados")
     public Iterable<Empleados> Empleados(){

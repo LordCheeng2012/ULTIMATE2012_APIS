@@ -9,28 +9,28 @@ public class Empleados {
     @Id
     @Column(name = "Codigo_Personal")
     private String codigoPersonal;
-
     @Column(name = "Nombres")
     private String nombres;
-
     @Column(name = "Apellidos")
     private String apellidos;
-
     @Column(name = "Edad")
     private Integer edad;
-
     @Column(name = "Sexo")
     private String sexo;
-
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
-
     @Column(name = "Carrera")
     private String carrera;
-
     @Column(name = "Foto", nullable = true)
     private String foto;
+    @Column(name = "Turno", nullable = true)
+    private String Turno;
+    @Column(name = "Area",nullable = false)
+    private String Area;
+    @Column(name = "rol",nullable = true)
+    private String rol;
+
     // Constructor with codigoPersonal parameter
     public Empleados(String codigoPersonal) {
         this.codigoPersonal = codigoPersonal;
@@ -38,6 +38,30 @@ public class Empleados {
 
     // Default constructor
     public Empleados() {
+    }
+
+    public String getTurno() {
+        return Turno;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public String getArea() {
+        return Area;
+    }
+
+    public void setArea(String area) {
+        Area = area;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public void setTurno(String turno) {
+        Turno = turno;
     }
 
     // Getters and Setters

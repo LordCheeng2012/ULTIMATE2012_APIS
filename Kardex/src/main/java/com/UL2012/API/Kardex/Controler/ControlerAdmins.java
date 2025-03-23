@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
-
 @RestController
 @RequestMapping("UL2012/API/Kardex/V1/Admins")
 public class ControlerAdmins {
@@ -17,31 +15,39 @@ public class ControlerAdmins {
     //METODOS-> ENDPOINTS
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest admin){
-        List<Object[]> messages = Iadm.Init_Session(admin.getUsername(), admin.getPassword());
-        List<Message> msg = Message.ResponseMessage(messages);
-        //VERIFICA LA RESPUESTA
+        System.out.println("objeto es : "+admin.toString());
         HttpStatus status=null;
-        if(admin.getUsername().equals("") || admin.getPassword().equals("")   ){
-
-            msg.add(new Message("ERR01",
-                    "Warning",
-                    "Campos vacios",
-                    "Campos vacios",
-                    "No data"));
+        List<Message> msg = null;
+        if(admin.getUsername().isEmpty() || admin.getPassword().isEmpty()){
             status = HttpStatus.BAD_REQUEST;
-
-        }else {
-            System.out.println("entro al else");
+            msg = List.of(new Message("ERR01",
+                    "Error",
+                    "Error de validacion",
+                    "Los campos no pueden estar vacios",
+                    ""));
+        }else{
+        //System.out.println("entro al for");
+        List<Object[]> messages = Iadm.Init_Session(admin.getUsername(), admin.getPassword());
+        msg= Message.ResponseMessage(messages);
+        //VERIFICA LA RESPUESTAA
+            //System.out.println("entro al else");
             for (Message m : msg) {
-                System.out.println("entro al for");
+
                 if (m.getCod_Msg().equals("SUC02")) {
-                    status = HttpStatus.OK;
-                } else {
+
+                    status = HttpStatus.ACCEPTED;
+                } else if(m.getCod_Msg().equals("ERR23")) {
                     status = HttpStatus.UNAUTHORIZED;
+                }else if(m.getCod_Msg().equals("ERR02")){
+                    status = HttpStatus.UNAUTHORIZED;
+                } else if (m.getCod_Msg().equals("ERR22")) {
+                    status = HttpStatus.BAD_REQUEST;
+                } else{
+                    status = HttpStatus.INTERNAL_SERVER_ERROR;
                 }
             }
-        }
-return new ResponseEntity<>(msg, status);
+    }
+        return new ResponseEntity<>(msg, status);
     }
 
 }

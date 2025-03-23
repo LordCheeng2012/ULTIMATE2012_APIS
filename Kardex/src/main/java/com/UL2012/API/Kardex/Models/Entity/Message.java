@@ -24,17 +24,11 @@ public class Message  {
         this.Data = data;
     }
      public static List<Message>  ResponseMessage(List<Object[]> data){
-        List<Message> messages = new ArrayList<>();
+        List<Message> messages;
 //importante : los streams , es una funcionalidad de java 8 en adelante que nos ayuda
 // a recorrer colecciones de datos de una manera mas eficiente
 // y map nos  ayuda a mapear los datos a traves de funciones para cada item de la coleccion
-        if( data.equals(null)|| data.isEmpty()){
-           messages.add(new Message("ERR01",
-                   "Error",
-                   "Error en la consulta",
-                   "Error en la consulta",
-                   "No data"));
-        }else {
+            //ystem.out.println("entro al else");
             messages=data.stream().map(item->
                     new Message(item[0].toString(),
                             item[1].toString(),
@@ -43,7 +37,7 @@ public class Message  {
                             item[4].toString())
             ).toList(); // toList es una funcion que nos ayuda
             // a convertir el stream en una lista
-        }
+
         return messages;
      }
 
@@ -87,6 +81,14 @@ public class Message  {
         this.message = message;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Message{" +
+                "Cod_Msg='" + Cod_Msg + '\'' +
+                ", type='" + type + '\'' +
+                ", title='" + title + '\'' +
+                ", message='" + message + '\'' +
+                ", Data='" + Data + '\'' +
+                '}';
+    }
 }

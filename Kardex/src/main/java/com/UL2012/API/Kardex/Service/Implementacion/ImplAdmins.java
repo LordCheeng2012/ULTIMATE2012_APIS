@@ -1,7 +1,7 @@
 package com.UL2012.API.Kardex.Service.Implementacion;
 import com.UL2012.API.Kardex.Models.Dao.AdminsDao;
 import com.UL2012.API.Kardex.Models.Entity.Admins;
-import com.UL2012.API.Kardex.Models.Entity.Message;
+
 import com.UL2012.API.Kardex.Service.INT_Admins;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,10 +26,6 @@ public class ImplAdmins implements INT_Admins {
         return  results;
 
     }
-
-
-
-
 
     @Override
     public Admins allAdmins() {
