@@ -2,7 +2,9 @@ package com.UL2012.API.Kardex.Models.Entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,7 +14,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.*;
 import javax.imageio.ImageIO;
-
 public  class Archivos {
     //propiedades
     private String PathUrl;
@@ -28,8 +29,7 @@ public  class Archivos {
             setFile(pathfile);
             salida.close();
             System.out.println("Archivo creado ");
-            return "[SUCCESS] : El archivo ah sido enviado al parametro File ,por favor use el getter para " +
-                    "obtener el objeto";
+            return "[SUCCESS] : Archivo Generado correctamente";
         } catch (Exception ex) {
             ex.printStackTrace(System.out);
             System.out.println("[ERROR] : "+ex.getMessage());
@@ -112,6 +112,18 @@ public  class Archivos {
     }
     //Estaticos
     public static void CreateQRCode(String NameFile,String Valor,String extensionfile){
+        List<String> p = new ArrayList<>();
+        p.add(NameFile);
+        p.add(Valor);
+        p.add(extensionfile);
+        for (String dat:p){
+            if(dat==null || dat.isEmpty()|| dat.equals("")){
+                System.out.println("[ERROR]: No se puede crear el qr, faltan datos");
+                return;
+            }
+        }
+
+
         try {
             //generar el archivo
             Archivos Dir= new Archivos();
@@ -144,8 +156,8 @@ public  class Archivos {
                 FileOutputStream qrCode= new FileOutputStream(Dir.getFile());
                 boolean flag = ImageIO.write(img,extensionfile,qrCode);
                 if(flag){
-                    System.out.println("Codigo generado correctamente" +
-                            " Verifique la la ruta de :"+Dir.getFile());
+                    System.out.println("Codigo generado correctamente," +
+                            " verifique la ruta de :"+Dir.getFile());
                 }else{
                     System.out.println("[Error] :  no se lleno la informacion a la imagen");
                     System.out.println("datos : "+img.toString()+" ," +
@@ -177,6 +189,9 @@ public  class Archivos {
     public static String readQRCode(String file)
             throws FileNotFoundException, IOException, NotFoundException,WriterException {
             //Obtener la imagen qr
+        if (file.isEmpty() || file==null){
+            return "[ERROR]: Warning this param : "+file+ " is null or empty";
+        }
         Archivos arc= new Archivos();
         File fl = arc.SearhFile(file);
 
@@ -194,7 +209,8 @@ public  class Archivos {
             BinaryBitmap bitmap = new BinaryBitmap(binarizer);
             Result res = new MultiFormatReader().decode(bitmap,hintMap);
             String resultado = res.getText();
-            return "[SUCCESS] : "+resultado;
+            System.out.println("[SUCCESS] : Información Extraida");
+            return resultado;
         }else{
            return "[ERROR]: No se encontro el archivo";
         }

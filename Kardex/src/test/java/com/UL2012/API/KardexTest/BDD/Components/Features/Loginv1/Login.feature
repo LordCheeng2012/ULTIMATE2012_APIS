@@ -7,7 +7,7 @@ Feature: Componente Login Ingresar al sistema
   @LoginCorrecto @HappyPath
   Scenario: Validar Login con credenciales Correctas y que status code  retorne 202 Accepted
     Given url UrlBase+Endpoint
-    And request { "username": "MoisesSolis@UL.com.pe", "password": "901263455" }
+    And request { "username": "MoisesSolis@UL.com.pe", "password": "901263455"
     When method post
     Then status 202
     And  match $..type contains 'Success'

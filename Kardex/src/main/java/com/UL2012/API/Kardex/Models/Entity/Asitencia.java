@@ -1,14 +1,9 @@
 package com.UL2012.API.Kardex.Models.Entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-import java.util.Objects;
+import jakarta.persistence.*;
+import java.time.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Asistencia")
@@ -18,7 +13,8 @@ public class Asitencia {
     @Column(name = "Codigo_Personal")
     private  String Cod_Per;
     @Column(name = "Fecha")
-    private  String Fecha;
+    @Temporal(TemporalType.DATE)
+    private Date Fecha;
     @Column(name = "Area")
     private  String Area;
     @Column(name = "Carrera")
@@ -27,16 +23,18 @@ public class Asitencia {
     private  String Turno ;
     @Column(name = "Rol")
     private  String Rol;
-    @Column(name = "Hora_Ing")
-    private  String Hora_Ingreso;
-    @Column(name = "Sal_Break")
-    private  String Hora_Break;
-    @Column(name = "Ret_Brike")
-    private  String Retorno_Break;
-    @Column(name = "Hora_Sal")
-    private  String Hora_Salida;
-
-
+    @Column(name = "Hora_Ing",nullable = true)
+    @Temporal(TemporalType.TIME)
+    private LocalTime Hora_Ingreso;
+    @Column(name = "Sal_Break", nullable = true )
+    @Temporal(TemporalType.TIME)
+    private  LocalTime Hora_Break;
+    @Column(name = "Ret_Brike" ,nullable = true)
+    @Temporal(TemporalType.TIME)
+    private  LocalTime Retorno_Break;
+    @Column(name = "Hora_Sal",nullable = true )
+    @Temporal(TemporalType.TIME)
+    private  LocalTime Hora_Salida;
     @Override
     public String toString() {
         return "Asitencia{" +
@@ -59,28 +57,56 @@ public class Asitencia {
     public Asitencia() {
     }
 
+    public LocalTime getHora_Ingreso() {
+        return Hora_Ingreso;
+    }
+
+    public void setHora_Ingreso(LocalTime hora_Ingreso) {
+        Hora_Ingreso = hora_Ingreso;
+    }
+
+    public LocalTime getHora_Break() {
+        return Hora_Break;
+    }
+
+    public void setHora_Break(LocalTime hora_Break) {
+        Hora_Break = hora_Break;
+    }
+
+    public LocalTime getRetorno_Break() {
+        return Retorno_Break;
+    }
+
+    public void setRetorno_Break(LocalTime retorno_Break) {
+        Retorno_Break = retorno_Break;
+    }
+
+    public LocalTime getHora_Salida() {
+        return Hora_Salida;
+    }
+
+    public void setHora_Salida(LocalTime hora_Salida) {
+        Hora_Salida = hora_Salida;
+    }
+
     public String getCod_Per() {
         return Cod_Per;
     }
 
-    public String getHora_Salida() {
-        return Hora_Salida;
-    }
-
-    public String getRetorno_Break() {
-        return Retorno_Break;
-    }
-
-    public String getHora_Ingreso() {
-        return Hora_Ingreso;
-    }
-
-    public String getFecha() {
+    public Date getFecha() {
         return Fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        Fecha = fecha;
     }
 
     public String getArea() {
         return Area;
+    }
+
+    public void setArea(String area) {
+        Area = area;
     }
 
     public String getCarrera() {
@@ -95,21 +121,7 @@ public class Asitencia {
         Cod_Per = cod_Per;
     }
 
-    public void setHora_Salida(String hora_Salida) {
-        Hora_Salida = hora_Salida;
-    }
 
-    public void setRetorno_Break(String retorno_Break) {
-        Retorno_Break = retorno_Break;
-    }
-
-    public void setHora_Break(String hora_Break) {
-        Hora_Break = hora_Break;
-    }
-
-    public void setHora_Ingreso(String hora_Ingreso) {
-        Hora_Ingreso = hora_Ingreso;
-    }
 
     public void setRol(String rol) {
         Rol = rol;
@@ -123,21 +135,11 @@ public class Asitencia {
         Carrera = carrera;
     }
 
-    public void setArea(String area) {
-        Area = area;
-    }
-
-    public void setFecha(String fecha) {
-        Fecha = fecha;
-    }
-
     public String getRol() {
         return Rol;
     }
 
-    public String getHora_Break() {
-        return Hora_Break;
-    }
+
 
 
 }

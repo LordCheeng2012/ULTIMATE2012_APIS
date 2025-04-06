@@ -1,7 +1,4 @@
 package com.UL2012.API.Kardex.Models.Entity;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Message  {

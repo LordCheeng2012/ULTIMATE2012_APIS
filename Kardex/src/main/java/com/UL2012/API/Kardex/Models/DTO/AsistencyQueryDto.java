@@ -91,4 +91,17 @@ public class AsistencyQueryDto {
     public void setHora_Salida(String hora_Salida) {
         this.hora_Salida = hora_Salida;
     }
+
+    public List<String> getParams() {
+        List<String> par = new ArrayList<String>();
+        par.add(cod_Per);
+        par.add(fecha);
+        par.add(area);
+        par.add(Carrera);
+        par.add(turno);
+        par.add(rol);
+        par.add(retorno_Break);
+        par.add(hora_Salida);
+        return par;
+    }
 }
