@@ -1,6 +1,6 @@
 package com.UL2012.API.Kardex.Controler;
 import com.UL2012.API.Kardex.Models.DTO.LoginRequest;
-import com.UL2012.API.Kardex.Models.Entity.Message;
+import com.UL2012.API.Kardex.Utils.Message;
 import com.UL2012.API.Kardex.Service.INT_Admins;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

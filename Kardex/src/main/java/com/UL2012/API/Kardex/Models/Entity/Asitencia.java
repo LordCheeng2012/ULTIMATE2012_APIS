@@ -10,6 +10,8 @@ import java.util.Date;
 public class Asitencia {
 
     @Id
+    @Column(name = "ID_Asistency")
+    private String ID_Asistency;
     @Column(name = "Codigo_Personal")
     private  String Cod_Per;
     @Column(name = "Fecha")
@@ -35,9 +37,19 @@ public class Asitencia {
     @Column(name = "Hora_Sal",nullable = true )
     @Temporal(TemporalType.TIME)
     private  LocalTime Hora_Salida;
+
+    public String getID_Asistency() {
+        return ID_Asistency;
+    }
+
+    public void setID_Asistency(String ID_Asistency) {
+        this.ID_Asistency = ID_Asistency;
+    }
+
     @Override
     public String toString() {
         return "Asitencia{" +
+                "'ID_Asistency'" + ID_Asistency +'\''+
                 "Cod_Per='" + Cod_Per + '\'' +
                 ", Fecha='" + Fecha + '\'' +
                 ", Area='" + Area + '\'' +
@@ -50,8 +62,8 @@ public class Asitencia {
                 ", Hora_Salida='" + Hora_Salida + '\'' +
                 '}';
     }
-    public Asitencia(String cod_Per) {
-        Cod_Per = cod_Per;
+    public Asitencia(String ID_As) {
+        ID_Asistency=ID_As;
     }
 
     public Asitencia() {
@@ -120,8 +132,6 @@ public class Asitencia {
     public void setCod_Per(String cod_Per) {
         Cod_Per = cod_Per;
     }
-
-
 
     public void setRol(String rol) {
         Rol = rol;

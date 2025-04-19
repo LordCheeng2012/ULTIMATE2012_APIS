@@ -1,9 +1,13 @@
 package com.UL2012.API.Kardex;
 import com.UL2012.API.Kardex.Models.Entity.Archivos;
+import com.UL2012.API.Kardex.Utils.Formats;
 import com.google.zxing.WriterException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import java.io.IOException;
+import java.text.Format;
+import java.util.concurrent.ForkJoinPool;
 
 @SpringBootApplication
 public class KardexApplication {
@@ -17,6 +21,7 @@ public class KardexApplication {
 		//System.out.println("leyendo qr..");
 		//String code = Archivos.readQRCode("MSOLISAL.png");
 		//System.out.println(code);
+
 	}
 
 }

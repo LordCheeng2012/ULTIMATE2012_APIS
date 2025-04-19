@@ -1,6 +1,6 @@
 package com.UL2012.API.KardexTest.Unit.TestLoginService;
 import com.UL2012.API.Kardex.Models.Dao.AdminsDao;
-import com.UL2012.API.Kardex.Models.Entity.Message;
+import com.UL2012.API.Kardex.Utils.Message;
 import com.UL2012.API.Kardex.Service.Implementacion.ImplAdmins;
 import com.UL2012.API.KardexTest.Unit.DataProviders;
 import org.junit.jupiter.api.Test;
