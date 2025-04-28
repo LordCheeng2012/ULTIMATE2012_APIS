@@ -5,6 +5,11 @@ import com.UL2012.API.Kardex.Utils.Message;
 import com.UL2012.API.Kardex.Service.INT_Asitency;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.WriterException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-
 @RestController
 @RequestMapping("UL2012/API/Kardex/V1/Asistency")
 public class ControlerAsistency {
@@ -21,13 +25,24 @@ public class ControlerAsistency {
     private INT_Asitency IAsis;
     private  Message msg= new Message();
     @PostMapping("/Query")
+    @Operation(summary = "Busqueda de Asistenia", description = "Permite a un administrador buscar a una Asistencia mediante parametros de filtrado, algunos filtros como fecha,Carrera u horas de ingreso o salida no estan disponibles" +
+            " y simplemente retornaran todos los registros existentes.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Lista de Asistencia según el filtro proporcionado.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Asitencia.class))),
+            @ApiResponse(responseCode = "400", description = "No se encontro la Asistencia.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)))
+    })
     public ResponseEntity<?> BusquedaByQueryParams(@RequestBody AsistencyQueryDto AsistenciaQuery) {
-        System.out.println("Objeto es : "+AsistenciaQuery.toString());
+
         Message msg=new Message();
         //implementar la logica antes de mandar a query al dao
         try {
             List<Asitencia> asis=null;
             int index=0;
+
             //verificar si uno de los parametros son nulos
             for (String param : AsistenciaQuery.getParams()) {
                 //se crea el get de obtener los parametros en el dto
@@ -43,6 +58,9 @@ public class ControlerAsistency {
                     AsistenciaQuery.getParams().set(index,param);
                 }
             }
+            if(AsistenciaQuery.getFecha().isEmpty()){
+                AsistenciaQuery.setFecha(null);
+            }
             //devuelve la lista de asistencias
              asis=IAsis.BusquedaByQueryParams(AsistenciaQuery);
             if(asis.isEmpty()){
@@ -57,8 +75,9 @@ public class ControlerAsistency {
         } catch (Exception e) {
             msg.setCod_Msg("ERR01");
             msg.setType("Error");
-            msg.setTitle("Error en la consulta");
-            msg.setMessage(e.getMessage());
+            msg.setTitle("Error en la peticion");
+            //msg.setMessage(e.getMessage());
+            msg.setMessage("Ocurrio un error en la petición , consulte con el administrador para mas detalles");
             return new ResponseEntity<>(msg, HttpStatus.BAD_REQUEST);
         }
 
@@ -66,6 +85,15 @@ public class ControlerAsistency {
 
     }
     @GetMapping("/Register/{asis}")
+    @Operation(summary = "Registro de Asistencia", description = "Permite registrar la asistencia de un empleado mediante su codigo de empleado")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Asistencia Registrada Exitosa.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))),
+            @ApiResponse(responseCode = "404", description = "No se encontro el codigo de Empleado.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)))
+    })
     public ResponseEntity<?> RegisterAsistency( @PathVariable("asis") String asis){
         HttpStatus codeStatus = HttpStatus.CONFLICT;
         ResponseEntity<?> response;
@@ -106,6 +134,16 @@ public class ControlerAsistency {
         return new ResponseEntity<>("ok",HttpStatus.OK);
     }
     @GetMapping("/UpdateAsistency")
+    @Operation(summary = "Actualizar Asistencia", description = "Permite actualizar la asistencia de un empleado mediante su codigo de empleado y el tipo de asistencia " +
+            "como Break, retorno de break o salida")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Asistencia Registrada Exitosa.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))),
+            @ApiResponse(responseCode = "400", description = "No se encontro el codigo de Empleado o tipo de asistencia.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)))
+    })
     public ResponseEntity<?> UpdateAsistency( @RequestHeader("code") String code,
                                               @RequestHeader("Pet") String Pet) throws NotFoundException,
             IOException,

@@ -28,4 +28,16 @@ public class Formats {
         return ID;
     }
 
+    public static boolean EvalID_Employe(String id){
+        String exp = "^([A-Z]{3})[0-9]{3}$";
+        if(exp.matches(id)){
+            System.out.println("ID de empleado valido");
+            return true;
+        }else {
+            System.out.println("ID de empleado invalido: "+id);
+            return false;
+        }
+
+    }
+
 }

@@ -29,7 +29,6 @@ public class ImplAsistency implements INT_Asitency {
     private AsistencyDao AsisDao;
     @Autowired
     private EmpleadosDao emp;
-
     Message msg = new Message();
     @Override
     public List<Asitencia> BusquedaByQueryParams(AsistencyQueryDto dto) throws Exception {
@@ -64,8 +63,8 @@ public class ImplAsistency implements INT_Asitency {
                     Optional <Asitencia> a = AsisDao.findById(id);
                     if(a.isPresent()){
                         System.out.println("Existe Asistencia");
-                        msg=msg.Get_Warning("Existe Asistencia",
-                                "No puedes volver a registrar tu asistencia porque ya lo marcaste");
+                        msg=msg.Get_Warning("Asistencia Creada",
+                                "EL Empleado ya marco su asistencia");
                         msg.setCodeStatus(HttpStatus.CONFLICT);
                     }else {
                         //Insertar el registro para el reporte

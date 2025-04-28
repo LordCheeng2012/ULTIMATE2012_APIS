@@ -1,14 +1,14 @@
 package com.UL2012.API.Kardex.Models.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "login_adms")
 public class Sessiones {
     @Id
+    @Column(name = "ID_Asistency")
+    private String ID_Asistency;
     @Column(name = "Codigo_Personal")
     private  String Codigo_Personal;
     @Column(name = "User_Name")
@@ -29,6 +29,14 @@ public class Sessiones {
 
     public String getCodigo_Personal() {
         return Codigo_Personal;
+    }
+
+    public String getID_Asistency() {
+        return ID_Asistency;
+    }
+
+    public void setID_Asistency(String ID_Asistency) {
+        this.ID_Asistency = ID_Asistency;
     }
 
     public void setCodigo_Personal(String codigo_Personal) {
