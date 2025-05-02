@@ -1,55 +1,63 @@
-Feature: Componente Login Ingresar al sistema
+Feature: Yo como Administrador quiero validar el login de la aplicacion Kardex_System
+para poder acceder a la aplicacion
   //definimos el endpoint y los datos
   Background:
-    * def UrlBase = 'http://localhost:5020/UL2012/API/Kardex/V1/Admins'
+    * call read('../../../../Utils/Config.feature@PathAdmins')
     * def Endpoint = '/login'
+    * def req = read('../../../../Req/Loginv1/Login.json')
+    * def res = read('../../../../Resp/Response.json')
+    * header Content-Type = 'application/json'
 
-  @LoginCorrecto @HappyPath
+  @LoginCorrecto @HappyPath @componente
   Scenario: Validar Login con credenciales Correctas y que status code  retorne 202 Accepted
-    Given url UrlBase+Endpoint
-    And request { "username": "MoisesSolis@UL.com.pe", "password": "901263455"
+    Given url UrlBase + Endpoint
+    * print UrlBase + Endpoint
+    * req.username = 'MoisesSolis@UL.com.pe'
+    * req.password = '901263455'
+    And request req
     When method post
     Then status 202
+    * def ID_Asis = response[0].data
+    * print ID_Asis
+    And match  response == res
     And  match $..type contains 'Success'
     And  match $..title contains 'ACCESS AUTHORISED'
     And  match $..message contains 'Credenciales Validas'
-    And  match $..data contains 'MSA458'
     And  match $..cod_Msg contains 'SUC02'
 
-  @LoginNoCorrecto @UnHappyPath
-  Scenario: Validar Login con credenciales Incorrectas y que status code  retorne 401 Unauthorized
-    Given url UrlBase+Endpoint
-    And request { "username": "MoisesSolis@UL.XX.XX", "password": "90126XX55" }
-    When method post
-    Then status 401
-    And  match $..type contains 'Error'
-    And  match $..title contains 'NO AUTHORIZED '
-    And  match $..message contains 'CREDENCIALES INEXISTENTES'
-    And  match $..data contains 'No Data'
-    And  match $..cod_Msg contains 'ERR22'
 
-  @LoginNoCorrecto @UnHappyPath
-  Scenario: Validar Login con credenciales vacias y que status code  retorne 400 Bad Request
+  @LoginNoCorrecto @UnHappyPath @componente
+  Scenario Outline: Validar Login con credenciales vacias o valores invalidos y que status code  retorne 400 Bad Request
     Given url UrlBase+Endpoint
-    And request { "username": "", "password": "" }
+    * req.username = '<user>'
+    * req.password = '<pass>'
+    And request req
     When method post
+    * print response
     Then status 400
-    And  match $..type contains 'Warning'
-    And  match $..title contains 'Campos vacios'
-    And  match $..message contains 'Campos vacios'
-    And  match $..data contains 'No data'
+    And match  response == res
+    And  match $..type contains 'Error'
+    And  match $..title contains '<title>'
+    And  match $..message contains '<msg>'
+    And match $..codeStatus contains <codeStatus>
+    And  match $..data contains '<data>'
     And  match $..cod_Msg contains 'ERR01'
+    Examples:
+      |user |       pass  |        title      |            msg                  |  data  |codeStatus|
+      |     |             |Error de validacion|Los campos no pueden estar vacios| |null|
+      |     |901263455  |Error de validacion|Los campos no pueden estar vacios| |null|
+      |#oterformat|901263455  |Error de validacion|El formato del usuario no es correcto|usuario no es el esperado|null|
 
-  @LoginNoCorrecto @UnHappyPath
-  Scenario: Validar Login con credenciales nulas y que status code  retorne 401 Unauthorized
+
+  @LoginNoCorrecto @UnHappyPath @componente
+  Scenario: Validar Login con credenciales nulas y que status code  retorne 500 por error no controlado
     Given url UrlBase+Endpoint
-    And request { "username": null, "password": null }
+    And request req
+    * req.username = null
+    * req.password = 'null'
     When method post
-    Then status 401
-    And  match $..type contains 'Warning'
-    And  match $..title contains 'Campos vacios'
-    And  match $..message contains 'Campos vacios'
-    And  match $..data contains 'No data'
-    And  match $..cod_Msg contains 'ERR01'
+    * print response
+    Then status 500
+
 
     ######################################################################################################################

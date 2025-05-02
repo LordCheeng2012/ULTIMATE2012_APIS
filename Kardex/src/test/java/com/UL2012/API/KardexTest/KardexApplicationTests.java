@@ -1,21 +1,22 @@
 package com.UL2012.API.KardexTest;
-import com.UL2012.API.Kardex.Models.Dao.AdminsDao;
-import com.UL2012.API.Kardex.Service.Implementacion.ImplAdmins;
-
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.intuit.karate.junit5.Karate;
 
 
 class KardexApplicationTests  {
+	//configurar el metodo de prueba para ejecutar test mediente su etiqueta
 
-	@Test
-	public void testInit_Session() {
 
-	}
+    @Karate.Test
+    Karate testSample() {
+        return Karate.run().relativeTo(getClass());
+    }
+
+    @Karate.Test
+    Karate testTags() {
+        return Karate.run().tags("~ignore").relativeTo(getClass());
+    }
+
+
+
+
 }
