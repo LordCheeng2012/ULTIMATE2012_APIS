@@ -37,7 +37,8 @@ public class ControlerAdmins {
     public ResponseEntity<?> login(@RequestBody LoginRequest admin){
         HttpStatus status=null;
         List<Message> msg = null;
-        if(admin.getUsername().isEmpty() || admin.getPassword().isEmpty()){
+        if((admin.getUsername() == null ||admin.getUsername().isEmpty())
+                || (admin.getPassword().isEmpty())||(admin.getPassword() == null)){
             status = HttpStatus.BAD_REQUEST;
             msg = List.of(new Message("ERR01",
                     "Error",
