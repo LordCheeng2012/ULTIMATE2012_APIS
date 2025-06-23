@@ -44,7 +44,7 @@ public class ControlerAdmins {
                     "Error",
                     "Error de validacion",
                     "Los campos no pueden estar vacios",
-                    ""));
+                    "",false));
         }else{
         //System.out.println("entro al for");
             if(!Formats.ValidateFormat("^([a-zA-Z]{10,20})@UL.com.pe$", admin.getUsername())){
@@ -53,7 +53,7 @@ public class ControlerAdmins {
                         "Error",
                         "Error de validacion",
                         "El formato del usuario no es correcto",
-                        "usuario no es el esperado"));
+                        "usuario no es el esperado",false));
                 status=HttpStatus.BAD_REQUEST;
             }else {
                 List<Object[]> messages = Iadm.Init_Session(admin.getUsername(), admin.getPassword());
@@ -102,7 +102,7 @@ public class ControlerAdmins {
                     "Error",
                     "Error de validacion",
                     "Los campos no pueden estar vacios",
-                    ""));
+                    "",false));
         }else{
             String message = "";
             if(Formats.ValidateFormat("^([A-Z]{3}[0-9]{3})([0-9]*)",id_asistency)){
@@ -124,7 +124,7 @@ public class ControlerAdmins {
                     "STATUS",
                     "Cierre de session",
                     message,
-                    ""));
+                    "",true));
         }
 
         return new ResponseEntity<>(msg, status);

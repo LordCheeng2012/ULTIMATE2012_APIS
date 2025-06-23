@@ -5,22 +5,33 @@ import com.UL2012.API.Kardex.Service.INT_Empleados;
 import com.UL2012.API.Kardex.Utils.Formats;
 import com.UL2012.API.Kardex.Utils.Message;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.xml.DefaultNamespaceHandlerResolver;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
+
+import java.time.DateTimeException;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("UL2012/API/Kardex/V1")
 public class ControlerEmpleados {
     @Autowired
     private INT_Empleados Iemp;
+    private final Formats formats= new Formats();
+    private final Message Response = new Message() ;
+    HttpStatus  status = null;
     //METODOS-> ENDPOINTS
     @PostMapping("Empleados/Save")
     @Operation(summary = "Actualizar Empleado", description = "Permite actualizar a un empleado existente o crear uno nuevo.")
@@ -32,46 +43,34 @@ public class ControlerEmpleados {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)))
     })
-    public ResponseEntity<?> SaveOrUpdate(@RequestBody Empleados Emp){
-        Map<String,Object> Response = new HashMap<>();
-        HttpStatus status = null;
-        if(!Formats.ValidateFormat("^[A-Z]{3}[0-9]{3}$",Emp.getCodigoPersonal())){
-            Response.put("Cod","ERR01");
-            Response.put("Estado","False");
-            Response.put("User",Emp.getCodigoPersonal());
-            Response.put("Password",Emp.getNombres());
-            Response.put("Details","Formato de codigo personal no es correcto");
-            status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(Response,status);
+    public ResponseEntity<?> SaveOrUpdate(@RequestBody Empleados Emp) {
+        //mapa de errores
+            try {
+                Message result = formats.ValidateObjectEmployes(Emp);
+                if(result.isFlag()){
+                    System.out.println("flag result es :"+result.isFlag());
+                    Iemp.SaveOrUpdateEmpleado(Emp);
+                    return new ResponseEntity<>(Response.Get_Success("Nuevo Empleado Registrado",Emp.getCodigoPersonal()), HttpStatus.CREATED);
+                }else{
+                    return new ResponseEntity<>(Response.Get_Error(result.getMessage(),"Verifique los datos ingresados"),HttpStatus.BAD_REQUEST);
+                }
 
-        }
-        if (Emp.getCodigoPersonal() == null || Emp.getNombres() == null) {
-            Response.put("Cod", "ERR01");
-            Response.put("Estado", "False");
-            Response.put("User", Emp.getCodigoPersonal());
-            Response.put("Password", Emp.getNombres());
-            Response.put("Details", "Datos del nuevo Empleado no pueden ser nulos O vacios");
-            status = HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(Response, status);
-        }
-        try{
-            Response.put("Cod","KAR01");
-            Response.put("Message","Se ah creado el Empleado");
-            Response.put("Details",Emp.getCodigoPersonal());
-             Iemp.SaveOrUpdateEmpleado(Emp);
-             return  new ResponseEntity<>(Response,HttpStatus.CREATED);
-        } catch (Exception e  ) {
-            Response.put("Cod","ERR02");
-            Response.put("Message","Ocurrio un error en la Peticion");
-            Response.put("Details",e.getMessage());
-            return  new ResponseEntity<>(Response,HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            } catch (NullPointerException e) {
+                System.out.println("Error de validación , Uno de los datos recibidos es nulo");
+                System.out.println("Los datos enviados no ccumplen con el esquema requerido");
+                return new ResponseEntity<>(Response.Get_Error("Excepcion no Controlada",
+                        "Hubo un problema al procesar la solicitud,Exactamente : Los datos enviados no ccumplen con el esquema requerido"), HttpStatus.BAD_REQUEST);
+            } catch (Exception e) {
+                return new ResponseEntity<>(Response.Get_Error("Excepcion no Controlada",
+                        "Hubo un problema al procesar la solicitud,Exactamente : Hubo un error en el servicio"), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/Empleados")
-    @Operation(summary = "Actualizar Asistencia", description = "Permite actualizar la asistencia de un empleado mediante su codigo de empleado y el tipo de asistencia " +
-            "como Break, retorno de break o salida")
+    @Operation(summary = "Lista Empleados", description = "Permite Listar a todos los empleados existentes.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Lista todos los empleados existentes.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Empleados.class))),
@@ -84,11 +83,13 @@ public class ControlerEmpleados {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Se encontro Empleado Exitosa.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Empleados.class))),
-            @ApiResponse(responseCode = "404", description = "No se encontro el codigo de Empleado o tipo de asistencia."),
+            @ApiResponse(responseCode = "204", description = "No se encontro recurso solicitado."),
+            @ApiResponse(responseCode = "404", description = "No se encontro el codigo de Empleado o tipo de asistencia.",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)))
     })
-    public ResponseEntity<?> FindByID(@PathVariable("Emp") String  Emp){
+    public ResponseEntity<?> FindByID(@Parameter(description = "ID del Empleado con formato :^([A-Z]{3})[0-9]{3}$ ") @PathVariable("Emp") String  Emp){
         Map<String,Object> Response = new HashMap<>();
         try {
             if(!Formats.ValidateFormat("^([A-Z]{3})[0-9]{3}$",Emp)){
@@ -126,7 +127,7 @@ public class ControlerEmpleados {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor.",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)))
     })
-    public ResponseEntity<?> DeleteEmp(@PathVariable("CodEmp") String CodEmp){
+    public ResponseEntity<?> DeleteEmp(@Parameter(description = "ID del Empleado con formato :^([A-Z]{3})[0-9]{3}$ ")@PathVariable("CodEmp") String CodEmp){
         //mapa de errores
         Map<String,Object> Response = new HashMap<>();
         //Cuando se trata de manejar respuesta automaticas
@@ -139,7 +140,7 @@ public class ControlerEmpleados {
             Response.put("Message","Formato Incorrecto");
             Response.put("Details","El formato del codigo personal no es correcto");
             return new ResponseEntity<>(Response,HttpStatus.NOT_FOUND);
-        }
+        }else {
         try{
             Empleados Emp = Iemp.FindByIdEmpleado(CodEmp);
             if (Emp == null) {
@@ -147,19 +148,21 @@ public class ControlerEmpleados {
                 Response.put("Message", "No se ah encontrado Empleado");
                 Response.put("Details", "No se ah encontrado el empleado con el codigo personal: " + CodEmp);
                 return new ResponseEntity<>(Response, HttpStatus.CONFLICT);
+            }else{
+                Iemp.DeleteEmp(Emp);
+                Response.put("Cod","KAR001");
+                Response.put("Message","Empleado Eliminado");
+                return  new ResponseEntity<>(Response,HttpStatus.OK);
             }
-            Iemp.DeleteEmp(Emp);
-            Response.put("Cod","KAR001");
-            Response.put("Message","Empleado Eliminado");
-            return  new ResponseEntity<>(Response,HttpStatus.OK);
-        }catch(DataAccessException exec){
 
+            }catch(DataAccessException exec){
             Response.put("Cod","ERR03");
             Response.put("Message","No se encontro el Empleado");
             Response.put("Detalle",exec.getMessage());
             return new ResponseEntity<>(Response,HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
     }
 
 }

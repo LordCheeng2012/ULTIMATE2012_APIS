@@ -1,6 +1,7 @@
 package com.UL2012.API.Kardex.Models.Entity;
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "empleados_data")
@@ -18,8 +19,7 @@ public class Empleados {
     @Column(name = "Sexo")
     private String sexo;
     @Column(name = "fecha_nacimiento")
-    @Temporal(TemporalType.DATE)
-    private Date fechaNacimiento;
+    private String fechaNacimiento;
     @Column(name = "Carrera")
     private String carrera;
     @Column(name = "Foto", nullable = true)
@@ -105,11 +105,11 @@ public class Empleados {
         this.sexo = sexo;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -128,5 +128,8 @@ public class Empleados {
     public void setFoto(String foto) {
         this.foto = foto;
     }
-
+    public List<Object> Get_Atributes(){
+        return List.of(getCodigoPersonal(),getNombres(),getApellidos(),getEdad(),
+                getFechaNacimiento(),getSexo(),getCarrera(),getRol(),getTurno(),getFoto());
+    }
 }

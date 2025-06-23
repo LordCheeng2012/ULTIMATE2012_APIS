@@ -1,3 +1,4 @@
+@featureLoginV1
 Feature: Yo como Administrador quiero validar el login de la aplicacion Kardex_System
 para poder acceder a la aplicacion
   //definimos el endpoint y los datos
@@ -8,7 +9,7 @@ para poder acceder a la aplicacion
     * def res = read('../../../../Resp/Response.json')
     * header Content-Type = 'application/json'
 
-  @LoginCorrecto @HappyPath @componente
+  @test_1 @LoginCorrecto @HappyPath @componente
   Scenario: Validar Login con credenciales Correctas y que status code  retorne 202 Accepted
     Given url UrlBase + Endpoint
     * print UrlBase + Endpoint
@@ -25,8 +26,7 @@ para poder acceder a la aplicacion
     And  match $..message contains 'Credenciales Validas'
     And  match $..cod_Msg contains 'SUC02'
 
-
-  @LoginNoCorrecto @UnHappyPath @componente
+  @test_2 @LoginNoCorrecto @UnHappyPath @componente
   Scenario Outline: Validar Login con credenciales vacias o valores invalidos y que status code  retorne 400 Bad Request
     Given url UrlBase+Endpoint
     * req.username = '<user>'
@@ -48,8 +48,7 @@ para poder acceder a la aplicacion
       |     |901263455  |Error de validacion|Los campos no pueden estar vacios| |null|
       |#oterformat|901263455  |Error de validacion|El formato del usuario no es correcto|usuario no es el esperado|null|
 
-
-  @LoginNoCorrecto @UnHappyPath @componente
+ @test_3 @LoginNoCorrecto @UnHappyPath @componente
   Scenario: Validar Login con credenciales nulas y que status code  retorne 500 por error no controlado
     Given url UrlBase+Endpoint
     And request req
@@ -57,7 +56,13 @@ para poder acceder a la aplicacion
     * req.password = 'null'
     When method post
     * print response
-    Then status 500
-
+    Then status 400
+    And match  response == res
+    And  match $..type contains 'Error'
+    And  match $..title contains 'Error de validacion'
+    And  match $..message contains 'Los campos no pueden estar vacios'
+    And match $..codeStatus contains null
+    And  match $..data contains ''
+    And  match $..cod_Msg contains 'ERR01'
 
     ######################################################################################################################

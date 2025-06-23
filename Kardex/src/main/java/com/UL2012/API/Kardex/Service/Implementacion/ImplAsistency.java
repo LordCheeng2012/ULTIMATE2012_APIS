@@ -64,7 +64,7 @@ public class ImplAsistency implements INT_Asitency {
                     if(a.isPresent()){
                         System.out.println("Existe Asistencia");
                         msg=msg.Get_Warning("Asistencia Creada",
-                                "EL Empleado ya marco su asistencia");
+                                "EL Empleado ya marco su asistencia",false);
                         msg.setCodeStatus(HttpStatus.CONFLICT);
                     }else {
                         //Insertar el registro para el reporte
@@ -73,6 +73,7 @@ public class ImplAsistency implements INT_Asitency {
                         resRepor.Show_Message();
                         msg=resRepor;
                         msg.setCodeStatus(HttpStatus.CREATED);
+                        msg.setMessage("Se ah registrado la asistencia para el empleado");
                     }
                 } catch (RuntimeException e) {
 
@@ -82,8 +83,8 @@ public class ImplAsistency implements INT_Asitency {
                 }
 
         }else {
-            msg=msg.Get_Warning("No existe Empleado","Verifique el codigo ingresado");
-            msg.setCodeStatus(HttpStatus.BAD_REQUEST);
+            msg=msg.Get_Warning("No existe Empleado","Verifique el codigo ingresado",false);
+            msg.setCodeStatus(HttpStatus.NOT_FOUND);
         }
         return msg ;
     }
@@ -119,7 +120,7 @@ public class ImplAsistency implements INT_Asitency {
         }else{
             System.out.println("no se encontro el registro en la asistencia");
             return Optional.of(msg.Get_Warning("No se encontro el registro",
-                    "Verifique el codigo ingresado"));
+                    "Verifique el codigo ingresado",false));
         }
         return Optional.of(msg);
     }
@@ -129,7 +130,7 @@ public class ImplAsistency implements INT_Asitency {
             Optional<Empleados> as = emp.findById(Code);
             if (as.isEmpty()) {
                 msg = msg.Get_Warning("No se encontro el empleado"
-                        , "Verifique el codigo ingresado");
+                        , "Verifique el codigo ingresado",false);
             }else {
                 List<Object[]> RESP = AsisDao.Asistency_Report(date, Code);
                 List<Message> ParseResp = Message.ResponseMessage(RESP);

@@ -1,6 +1,7 @@
 package com.UL2012.API.Kardex.Utils;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 public class Message  {
@@ -10,15 +11,18 @@ public class Message  {
     private String title;
     private String message;
     private String Data;
+    private boolean flag;
     private HttpStatus codeStatus;
     public Message() {
     }
-    public Message(String cod_Msg, String type, String title, String message,String data) {
+    public Message(String cod_Msg, String type, String title, String message,String data,boolean flag) {
         Cod_Msg = cod_Msg;
         this.type = type;
         this.title = title;
         this.message = message;
         this.Data = data;
+        this.flag=flag;
+
     }
     public String getCod_Msg() {
         return Cod_Msg;
@@ -60,6 +64,13 @@ public class Message  {
                 ", Data='" + Data + '\'' +
                 '}';
     }
+    public boolean isFlag() {
+        return flag;
+    }
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+
 
     public HttpStatus getCodeStatus() {
         return codeStatus;
@@ -69,7 +80,7 @@ public class Message  {
         this.codeStatus = codeStatus;
     }
 
-    public  Message Get_Warning(String message, String details){
+    public  Message Get_Warning(String message, String details,boolean flag){
         String Code_Msg="WAR01";
         String Title ="Inesperado";
         String Type="Warning";
@@ -77,7 +88,15 @@ public class Message  {
         String data;
         HttpStatus CodeStatus=HttpStatus.BAD_REQUEST;
         data = details;
-        return new Message(Code_Msg,Title,Type,Msg,data);
+        return new Message(Code_Msg,Title,Type,Msg,data,flag);
+    }
+    public  Message Get_Error(String message, String details){
+        String Code_Msg="ERR01";
+        String Title ="Inesperado";
+        String Type="ERROR";
+        String Msg =message;
+        HttpStatus CodeStatus=HttpStatus.INTERNAL_SERVER_ERROR;
+        return new Message(Code_Msg,Title,Type,Msg,details,false);
     }
     public  Message Get_Success(String message, String details){
         String Code_Msg="SUC01";
@@ -86,7 +105,7 @@ public class Message  {
         String Msg =message;
         String data=details;
         HttpStatus CodeStatus=HttpStatus.OK;
-        return new Message(Code_Msg,Title,Type,Msg,data);
+        return new Message(Code_Msg,Title,Type,Msg,data,true);
     }
     public static List<Message>  ResponseMessage(List<Object[]> data){
         List<Message> messages;
@@ -109,7 +128,8 @@ public class Message  {
                         item[1].toString(),
                         item[2].toString(),
                         item[3].toString(),
-                        item[4].toString())
+                        item[4].toString(),
+                        false)
         ).toList(); // toList es una funcion que nos ayuda
         // a convertir el stream en una lista
 
@@ -120,6 +140,10 @@ public class Message  {
         System.out.println("[Code] :"+this.Cod_Msg);
         System.out.println("[Description] :"+this.message);
         System.out.println("[Details] :"+this.Data);
+    }
+    public ResponseEntity<Message> Get_Info(String title , String details,String data,HttpStatus HTTP)
+    {
+        return new ResponseEntity<>(new Message("INF01","INFO",title,details,data,true),HTTP);
     }
 }
 //get response message default

@@ -1,0 +1,43 @@
+{
+  "Ok":
+    {
+      "codigoPersonal": "#string",
+      "nombres": "#string",
+      "apellidos": "#string",
+      "edad": "#number",
+      "sexo": "#string",
+      "fechaNacimiento": "#string",
+      "carrera": "#string",
+      "foto": "#ignore",
+      "rol": "#string",
+      "turno": "#string",
+      "area": "#string"
+    },
+  "NotFound":
+    {
+      "Details": "#string",
+      "Message": "#string",
+      "Cod": "#string"
+    },
+  "Created": {
+    "type": "Exito",
+    "title": "Success",
+    "message": "#string",
+    "flag": true,
+    "codeStatus": "#ignore",
+    "data": "#string",
+    "cod_Msg": "SUC01"
+  },
+  "BadRequest": {
+    "type": "#string",
+    "title": "#string",
+    "message": "#string",
+    "flag": false,
+    "codeStatus": "#ignore",
+    "data": "#string",
+    "cod_Msg": "#string"
+  }
+
+
+
+}

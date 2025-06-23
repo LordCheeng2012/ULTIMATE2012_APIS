@@ -1,0 +1,13 @@
+{
+  "codigoPersonal": "BLE174",
+  "nombres": "Beatriz",
+  "apellidos": "López Estrada",
+  "edad":22,
+  "sexo": "Femenino",
+  "fechaNacimiento": "2003-05-30",
+  "carrera": "Marketing Digital",
+  "foto": "not_required",
+  "rol": "Empleado Interno",
+  "area": "Ventas",
+  "turno": "Tarde"
+}

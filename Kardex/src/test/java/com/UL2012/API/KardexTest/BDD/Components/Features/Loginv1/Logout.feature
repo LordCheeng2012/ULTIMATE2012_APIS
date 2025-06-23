@@ -1,3 +1,4 @@
+@featureLogoutV1
 Feature: Yo como Administrador quiero cerrar mi session en la api Kardex-System
 Background:
   * call read('../../../../Utils/Config.feature@PathAdmins')
@@ -5,8 +6,7 @@ Background:
   * def req = read('../../../../Req/Loginv1/Login.json')
   * def res = read('../../../../Resp/Response.json')
   * header Content-Type = 'application/json'
-
-  @logoutCorrecto @componente
+  @test_4 @logoutCorrecto @componente @HappyPath
 Scenario: Validar que endpoint de logout cierre mi sessio correctamente - 200
   * call read('Login.feature@LoginCorrecto')
   Given url UrlBase + End
@@ -22,7 +22,7 @@ Scenario: Validar que endpoint de logout cierre mi sessio correctamente - 200
     And match response[0].data == ''
     And match response[0].cod_Msg == 'STD01'
 
-@logoutcorrecto @componente
+@test_5 @logoutNocorrecto @componente @UnHappyPath
  Scenario Outline: Validar que endpoint de logout falle por id session inexistentes o expirados - 400
    Given url UrlBase + End
    * print UrlBase + End

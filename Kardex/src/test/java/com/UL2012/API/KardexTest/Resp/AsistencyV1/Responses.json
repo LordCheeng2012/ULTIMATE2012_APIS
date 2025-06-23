@@ -1,0 +1,61 @@
+{
+  "Register": {
+  "Created": {
+    "type": "Success",
+    "title": "Solicitud Existosa",
+    "message": "Se ah registrado la asistencia para el empleado",
+    "flag": false,
+    "codeStatus": "CREATED",
+    "data": "No Data",
+    "cod_Msg": "SUC01"
+  },
+  "BadRequest": {
+    "type": "Inesperado",
+    "title": "Warning",
+    "message": "Formato invalido para el codigo de registro",
+    "flag": false,
+    "codeStatus": null,
+    "data": "Parametro recibido es invalido",
+    "cod_Msg": "WAR01"
+  },
+  "Conflict": {
+    "type": "Inesperado",
+    "title": "Warning",
+    "message": "Asistencia Creada",
+    "flag": false,
+    "codeStatus": "CONFLICT",
+    "data": "EL Empleado ya marco su asistencia",
+    "cod_Msg": "WAR01"
+  },
+  "Not_Found": {
+    "type": "Inesperado",
+    "title": "Warning",
+    "message": "No existe Empleado",
+    "flag": false,
+    "codeStatus": "NOT_FOUND",
+    "data": "Verifique el codigo ingresado",
+    "cod_Msg": "WAR01"
+  }
+
+},
+  "Updated": {
+    "Ok": {
+      "type": "INFO",
+      "title": "Actualizar Asistencia",
+      "message": "#string",
+      "flag": true,
+      "codeStatus": null,
+      "cod_Msg": "#regex ^(SUC01|INF01)$",
+      "data": "#regex ^(El registro se ah actualizado correctamente|no data)$"
+    },
+    "BadRequest": {
+      "type": "#regex ^(Inesperado|INFO)$",
+      "title": "#regex ^(Actualizar Asistencia|Headers Requeridos|Warning)$",
+      "message": "#regex ^(Limite de caracteres exedido para codigo o peticion|.*)$",
+      "flag": "#boolean",
+      "codeStatus": null,
+      "data": "#string",
+      "cod_Msg": "#regex ^(WAR02|WAR01|INF01)$"
+    }
+  }
+}
