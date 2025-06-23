@@ -255,6 +255,7 @@ public class ControlerAsistency {
                 required = true
             ) @RequestHeader("Peticion") Optional<Object> Pet) {
         HttpStatus http = HttpStatus.INTERNAL_SERVER_ERROR;
+        Optional<Message> response = Optional.empty();
         String mensaje="";
         try {
         if(Formats.validateHeaders(Map.of("CODE",code,"Peticion",Pet))) {
@@ -266,29 +267,31 @@ public class ControlerAsistency {
                     case "Break":
                         mensaje = "Time of the Break";
                         System.out.println(mensaje);
-                        IAsis.UpdateAsistency(CODE, PETICION);
-                        http = HttpStatus.OK;
+                        response= IAsis.UpdateAsistency(CODE, PETICION);
+                        http = response.get().isFlag()? HttpStatus.OK:HttpStatus.BAD_REQUEST;
                         break;
                     case "RetBreak":
                         mensaje = "Return Break";
                         System.out.println("Return Break");
-                        IAsis.UpdateAsistency(CODE, PETICION);
-                        http = HttpStatus.OK;
+                        response= IAsis.UpdateAsistency(CODE, PETICION);
+                        http = response.get().isFlag()? HttpStatus.OK:HttpStatus.BAD_REQUEST;
                         break;
                     case "Exit":
                         mensaje = "Time of the Exit";
                         System.out.println(mensaje);
-                        IAsis.UpdateAsistency(CODE, PETICION);
-                        http = HttpStatus.OK;
+                        response= IAsis.UpdateAsistency(CODE, PETICION);
+                        http = response.get().isFlag()? HttpStatus.OK:HttpStatus.BAD_REQUEST;
                         break;
                     default:
                         mensaje = "Fallo en el registro , no se detecto la petición";
                         http = HttpStatus.BAD_REQUEST;
+                        response = Optional.of(msg.Get_Warning(mensaje,"no se detecto la peticion requerida",false)) ;
                         break;
                 }
             } else {
                 mensaje = "Limite de caracteres exedido para codigo o peticion";
                 http = HttpStatus.BAD_REQUEST;
+                response = Optional.of(msg.Get_Error(mensaje,"Parametros [CODIGO Y PETICION] deben cumplir con la validacion de - maximo 10 minimo 10"));
             }
             msg.setCod_Msg("WAR02");
             msg.setTitle("Actualizar Asistencia");
@@ -304,7 +307,7 @@ public class ControlerAsistency {
         } catch (Exception e) {
             return new ResponseEntity<>(msg.Get_Error("Error Inesperado","Ocurrio un error no controlado"),HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return msg.Get_Info("Actualizar Asistencia",mensaje,"El registro se ah actualizado correctamente",http);
+        return new ResponseEntity<>(response.get(),http);
     }
 
 }

@@ -40,8 +40,8 @@
 },
   "Updated": {
     "Ok": {
-      "type": "INFO",
-      "title": "Actualizar Asistencia",
+      "type": "#regex ^(INFO|Success|Exito)$",
+      "title": "#regex ^(Actualizar Asistencia|Success)$",
       "message": "#string",
       "flag": true,
       "codeStatus": null,
@@ -50,12 +50,12 @@
     },
     "BadRequest": {
       "type": "#regex ^(Inesperado|INFO)$",
-      "title": "#regex ^(Actualizar Asistencia|Headers Requeridos|Warning)$",
+      "title": "#regex ^(Actualizar Asistencia|Headers Requeridos|Warning|ERROR)$",
       "message": "#regex ^(Limite de caracteres exedido para codigo o peticion|.*)$",
       "flag": "#boolean",
       "codeStatus": null,
       "data": "#string",
-      "cod_Msg": "#regex ^(WAR02|WAR01|INF01)$"
+      "cod_Msg": "#regex ^(WAR02|WAR01|INF01|ERR01)$"
     }
   }
 }
