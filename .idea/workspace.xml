@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="908f371b-61cd-430d-90f6-6b704b9ff2d6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Kardex/src/test/logback.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Kardex_System_API.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/zxing_core_2_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kardex/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kardex/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kardex/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kardex/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Kardex/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kardex/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Kardex/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/BDD/Components/Features/Loginv1/Login.feature" beforeDir="false" afterPath="$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/BDD/Components/Features/Loginv1/Login.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/BDD/Components/Features/Loginv1/Logout.feature" beforeDir="false" afterPath="$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/BDD/Components/Features/Loginv1/Logout.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/Unit/TestLoginService/TestLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/Unit/TestLoginService/TestLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/Utils/Config.feature" beforeDir="false" afterPath="$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/Utils/Config.feature" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {}
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/LordCheeng2012/ULTIMATE2012_APIS.git&quot;,
+    &quot;accountId&quot;: &quot;145bcec9-f611-42d1-9cea-c47a4e991194&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Kardex/pom.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Kardex/src/main/java/com/UL2012/API/Kardex/Service/Implementacion/ImplAsistency.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Kardex/src/main/resources/application.properties" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/BDD/Components/Features/Loginv1/Login.feature" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/BDD/Components/Features/Loginv1/Logout.feature" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/Utils/Config.feature" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2tn3NN09nBIBYZFX393xWNH9jvy" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.KardexApplication.executor": "Run",
+    "Cucumber Java.Feature: Login.executor": "Run",
+    "Cucumber Java.Scenario: Validar Login con credenciales Correctas y que status code  retorne 202 Accepted.executor": "Run",
+    "Cucumber Java.Scenario: Validar Login con credenciales nulas y que status code  retorne 500 por error no controlado.executor": "Run",
+    "Cucumber Java.Scenario: Validar Login con credenciales vacias o valores invalidos y que status code  retorne 400 Bad Request.executor": "Run",
+    "JUnit.KardexApplicationTests.testInit_Session.executor": "Run",
+    "JUnit.KardexApplicationTests.testSystemProperty.executor": "Run",
+    "JUnit.TestLogin.TestInitSession.executor": "Run",
+    "JUnit.TestLogin.executor": "Run",
+    "Karate.Login.executor": "Run",
+    "Karate.Login:12.executor": "Run",
+    "Karate.Login:28.executor": "Run",
+    "Karate.Login:29.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "KardexApi",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Herramientas de Estudios/Proyectos_Desarrollo De Software/ULTIMATE2012APIS/Kardes_System_Api/Kardex/lib/Lib/zxing-1.7-javase.jar",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.31954023",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Herramientas de Estudios\Proyectos_Desarrollo De Software\ULTIMATE2012APIS\Kardes_System_Api\Kardex\src\test" />
+      <recent name="C:\Herramientas de Estudios\Proyectos_Desarrollo De Software\ULTIMATE2012APIS\Kardes_System_Api\Kardex\src\test\java\com\UL2012\API\KardexTest\Req\LoginV1" />
+      <recent name="C:\Herramientas de Estudios\Proyectos_Desarrollo De Software\ULTIMATE2012APIS\Kardes_System_Api\Kardex\src\test\java\com\UL2012\API\KardexTest\BDD\Components\Features\Loginv1" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.KardexApplication">
+    <configuration name="KardexApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.UL2012.API.Kardex.KardexApplication" />
+      <module name="Kardex" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.UL2012.API.Kardex.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Scenario: Validar Login con credenciales nulas y que status code  retorne 500 por error no controlado" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="1.2" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/BDD/Components/Features/Loginv1/Login.feature" />
+      <option name="GLUE" value="com.intuit.karate" />
+      <option name="MAIN_CLASS_NAME" value="cucumber.api.cli.Main" />
+      <module name="Kardex" />
+      <option name="NAME_FILTER" value="^Validar Login con credenciales nulas y que status code  retorne 500 por error no controlado$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvmSMFormatter --monochrome --name &quot;^Validar Login con credenciales nulas y que status code  retorne 500 por error no controlado$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: Validar Login con credenciales nulas y que status code  retorne 500 por error no controlado" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cucumber.api.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Scenario: Validar Login con credenciales vacias o valores invalidos y que status code  retorne 400 Bad Request" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="CUCUMBER_CORE_VERSION" value="1.2" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/BDD/Components/Features/Loginv1/Login.feature" />
+      <option name="GLUE" value="com.intuit.karate" />
+      <option name="MAIN_CLASS_NAME" value="cucumber.api.cli.Main" />
+      <module name="Kardex" />
+      <option name="NAME_FILTER" value="^Validar Login con credenciales vacias o valores invalidos y que status code  retorne 400 Bad Request$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvmSMFormatter --monochrome --name &quot;^Validar Login con credenciales vacias o valores invalidos y que status code  retorne 400 Bad Request$&quot;" />
+      <shortenClasspath name="NONE" />
+      <option name="SUGGESTED_NAME" value="Scenario: Validar Login con credenciales vacias o valores invalidos y que status code  retorne 400 Bad Request" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cucumber.api.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Kardes_System_Api" type="KarateRunConfiguration" factoryName="KarateRunConfiguration" temporary="true">
+      <option name="karatePath" value="$PROJECT_DIR$" />
+      <module name="Kardex_System_API" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Login" type="KarateRunConfiguration" factoryName="KarateRunConfiguration" temporary="true">
+      <option name="karatePath" value="$PROJECT_DIR$/Kardex/src/test/java/com/UL2012/API/KardexTest/BDD/Components/Features/Loginv1/Login.feature" />
+      <module name="Kardex" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.KardexApplication" />
+        <item itemvalue="Karate.Kardes_System_Api" />
+        <item itemvalue="Cucumber Java.Scenario: Validar Login con credenciales nulas y que status code  retorne 500 por error no controlado" />
+        <item itemvalue="Cucumber Java.Scenario: Validar Login con credenciales vacias o valores invalidos y que status code  retorne 400 Bad Request" />
+        <item itemvalue="Karate.Login" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="908f371b-61cd-430d-90f6-6b704b9ff2d6" name="Changes" comment="" />
+      <created>1740973972642</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740973972642</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
