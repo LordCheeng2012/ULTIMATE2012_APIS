@@ -1,5 +1,4 @@
 package com.UL2012.API.Kardex.Controler;
-
 import com.UL2012.API.Kardex.Models.DTO.AsistencyQueryDto;
 import com.UL2012.API.Kardex.Models.Entity.Asitencia;
 import com.UL2012.API.Kardex.Utils.Formats;
@@ -38,20 +37,37 @@ public class ControlerAsistency {
     @PostMapping("/Query")
     @Operation(
         summary = "Búsqueda de Asistencia",
-        description = "Permite a un administrador buscar asistencias mediante parámetros de filtrado. Algunos filtros como fecha, carrera u horas de ingreso/salida pueden no estar disponibles y retornarán todos los registros existentes. Útil para reportes y auditorías.",
-        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-            description = "Objeto con los parámetros de búsqueda. Ejemplo: {\"codigoEmpleado\":\"ABC123\", \"fecha\":\"2024-06-22\"}",
-            required = true,
-            content = @Content(schema = @Schema(implementation = AsistencyQueryDto.class))
-        )
+        description = "Permite a un administrador buscar asistencias mediante parámetros de filtrado. " +
+                "Los filtros pueden incluir código de empleado, fecha, carrera, horas de ingreso/salida, entre otros. " +
+                "Si algún filtro no se proporciona, se retornarán todos los registros existentes para ese campo. " +
+                "Ideal para reportes y auditorías. " +
+                "Reglas de validación: al menos un parámetro debe estar presente. Si 'fecha' está vacía, se ignora en el filtro."
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Lista de Asistencia según el filtro proporcionado.",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Asitencia.class))),
-            @ApiResponse(responseCode = "400", description = "No se encontro la Asistencia.",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor.",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)))
+            @ApiResponse(
+                responseCode = "200",
+                description = "Lista de asistencias encontrada según los filtros proporcionados. " +
+                        "Se retorna una lista vacía si no hay coincidencias.",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Asitencia.class))
+            ),
+            @ApiResponse(
+                responseCode = "404",
+                description = "No se encontraron registros con los parámetros ingresados. " +
+                        "Esto ocurre cuando la búsqueda no arroja resultados.",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))
+            ),
+            @ApiResponse(
+                responseCode = "400",
+                description = "Solicitud mal formada o error en los parámetros de entrada. " +
+                        "Por ejemplo, si los parámetros requeridos están vacíos o nulos.",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))
+            ),
+            @ApiResponse(
+                responseCode = "500",
+                description = "Error interno del servidor. " +
+                        "Ocurre cuando hay una excepción inesperada durante el procesamiento.",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))
+            )
     })
     public ResponseEntity<?> BusquedaByQueryParams(@RequestBody AsistencyQueryDto AsistenciaQuery) {
 
@@ -103,16 +119,41 @@ public class ControlerAsistency {
 
     }
     @GetMapping("/Register/{asis}")
-    @Operation(summary = "Registro de Asistencia", description = "Permite registrar la asistencia de un empleado mediante su codigo de empleado")
+    @Operation(
+        summary = "Registro de Asistencia",
+        description = "Permite registrar la asistencia de un empleado mediante su código de empleado. " +
+                "Reglas de validación: el código de empleado no debe estar vacío y debe tener un máximo de 7 caracteres. " +
+                "Si el código es inválido, se retorna un error."
+    )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Asistencia Registrada Exitosa.",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))),
-            @ApiResponse(responseCode = "404", description = "No se encontro el codigo de Empleado.",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor.",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)))
+            @ApiResponse(
+                responseCode = "200",
+                description = "Asistencia registrada exitosamente. " +
+                        "Se retorna un mensaje de confirmación.",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))
+            ),
+            @ApiResponse(
+                responseCode = "400",
+                description = "El código de empleado está vacío o no cumple con las reglas de validación (máximo 7 caracteres).",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))
+            ),
+            @ApiResponse(
+                responseCode = "404",
+                description = "No se encontró el código de empleado en el sistema.",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))
+            ),
+            @ApiResponse(
+                responseCode = "409",
+                description = "Conflicto al registrar la asistencia. Puede deberse a un registro duplicado.",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))
+            ),
+            @ApiResponse(
+                responseCode = "500",
+                description = "Error interno del servidor.",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))
+            )
     })
-    public ResponseEntity<?> RegisterAsistency( @PathVariable("asis") String asis){
+    public ResponseEntity<?> RegisterAsistency(@PathVariable("asis") String asis){
         HttpStatus codeStatus = HttpStatus.CONFLICT;
         ResponseEntity<?> response;
         boolean flag=true;
@@ -143,6 +184,29 @@ public class ControlerAsistency {
         return response;
     }
     @GetMapping("/Register/QRCode")
+    @Operation(
+        summary = "Registro de Asistencia por QR",
+        description = "Permite registrar la asistencia de un empleado mediante un código QR. " +
+                "El parámetro 'code' debe ser igual a 'true' para ejecutar el registro. " +
+                "Si el parámetro es distinto, se retorna un error."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                responseCode = "200",
+                description = "Asistencia registrada exitosamente mediante QR.",
+                content = @Content(mediaType = "application/json", schema = @Schema(example = "\"ok\""))
+            ),
+            @ApiResponse(
+                responseCode = "400",
+                description = "El parámetro 'code' es inválido o no se proporcionó correctamente.",
+                content = @Content(mediaType = "application/json", schema = @Schema(example = "\"error\""))
+            ),
+            @ApiResponse(
+                responseCode = "500",
+                description = "Error interno del servidor.",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))
+            )
+    })
     public  ResponseEntity<?> RegisterByQRCode(String code) throws NotFoundException, IOException, WriterException {
         if(code.equals("true")){
             IAsis.RegisterAsistencyByQRCode();
@@ -152,20 +216,44 @@ public class ControlerAsistency {
         return new ResponseEntity<>("ok",HttpStatus.OK);
     }
     @GetMapping("/UpdateAsistency")
-    @Operation(summary = "Actualizar Asistencia", description = "Permite actualizar la asistencia de un empleado mediante su codigo de empleado y el tipo de asistencia " +
-            "como Break, retorno de break o salida")
+    @Operation(
+        summary = "Actualizar Asistencia",
+        description = "Permite actualizar la asistencia de un empleado mediante su código de empleado y el tipo de asistencia. " +
+                "Reglas de validación: " +
+                "- El header 'code' debe tener formato ^[A-Z]{3}[0-9]{11}$ y no estar vacío. " +
+                "- El header 'Peticion' debe ser uno de los siguientes valores: [Break, RetBreak, Exit]. " +
+                "Si los headers no cumplen con las reglas, se retorna un error."
+    )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Asistencia Registrada Exitosa.",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))),
-            @ApiResponse(responseCode = "400", description = "No se encontro el codigo de Empleado o tipo de asistencia.",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor.",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class)))
+            @ApiResponse(
+                responseCode = "200",
+                description = "Asistencia actualizada exitosamente. " +
+                        "Se retorna un mensaje de confirmación.",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))
+            ),
+            @ApiResponse(
+                responseCode = "400",
+                description = "El código de empleado o el tipo de asistencia no cumplen con las reglas de validación, " +
+                        "o los headers requeridos no están presentes.",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))
+            ),
+            @ApiResponse(
+                responseCode = "500",
+                description = "Error interno del servidor.",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = Message.class))
+            )
     })
-    public ResponseEntity<?> UpdateAsistency(@Parameter(description = "Codigo de la asistencia con formato : ^[A-Z]{3}[0-9]{11}$",allowEmptyValue = true) @RequestHeader("code") Optional<Object> code,
-                                              @Parameter(description = "Maixmo : 8 , Minimo :8 , Tipo de marcado de asitencia [Break]:\n" +
-                                                      "Indica el marcado de salida de almuerzo\n"+"[RetBreak]:"+"Indica el retorno de merienda \n"+
-                                                      "[Exit] :Indica el marcado de salida") @RequestHeader("Peticion") Optional<Object> Pet) {
+    public ResponseEntity<?> UpdateAsistency(
+            @Parameter(
+                description = "Código de la asistencia. Formato requerido: ^[A-Z]{3}[0-9]{11}$. No debe estar vacío.",
+                example = "ABC12345678901",
+                required = true
+            ) @RequestHeader("code") Optional<Object> code,
+            @Parameter(
+                description = "Tipo de marcado de asistencia. Valores permitidos: [Break] (salida de almuerzo), [RetBreak] (retorno de merienda), [Exit] (salida).",
+                example = "Break",
+                required = true
+            ) @RequestHeader("Peticion") Optional<Object> Pet) {
         HttpStatus http = HttpStatus.INTERNAL_SERVER_ERROR;
         String mensaje="";
         try {
@@ -218,7 +306,5 @@ public class ControlerAsistency {
         }
         return msg.Get_Info("Actualizar Asistencia",mensaje,"El registro se ah actualizado correctamente",http);
     }
-
-
 
 }
