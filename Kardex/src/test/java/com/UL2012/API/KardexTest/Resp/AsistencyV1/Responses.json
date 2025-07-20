@@ -10,8 +10,8 @@
     "cod_Msg": "SUC01"
   },
   "BadRequest": {
-    "type": "Inesperado",
-    "title": "Warning",
+    "title": "Inesperado",
+    "type": "#regex ^(Warning|ERROR)$",
     "message": "Formato invalido para el codigo de registro",
     "flag": false,
     "codeStatus": null,
@@ -19,8 +19,8 @@
     "cod_Msg": "WAR01"
   },
   "Conflict": {
-    "type": "Inesperado",
-    "title": "Warning",
+    "type": "Warning",
+    "title": "Inesperado",
     "message": "Asistencia Creada",
     "flag": false,
     "codeStatus": "CONFLICT",
@@ -28,8 +28,8 @@
     "cod_Msg": "WAR01"
   },
   "Not_Found": {
-    "type": "Inesperado",
-    "title": "Warning",
+    "type": "Warning",
+    "title": "Inesperado",
     "message": "No existe Empleado",
     "flag": false,
     "codeStatus": "NOT_FOUND",
@@ -49,8 +49,8 @@
       "data": "#regex ^(El registro se ah actualizado correctamente|no data)$"
     },
     "BadRequest": {
-      "type": "#regex ^(Inesperado|INFO)$",
-      "title": "#regex ^(Actualizar Asistencia|Headers Requeridos|Warning|ERROR)$",
+      "type": "#regex ^(INFO|Warning|ERROR)$",
+      "title": "#regex ^(Inesperado|Actualizar Asistencia|Headers Requeridos|Warning|ERROR)$",
       "message": "#regex ^(Limite de caracteres exedido para codigo o peticion|.*)$",
       "flag": "#boolean",
       "codeStatus": null,

@@ -5,6 +5,7 @@
       "message": "#string",
       "codeStatus": null,
       "data": "#string",
-      "cod_Msg": "#string"
+      "cod_Msg": "#string",
+      "flag":false
   }
 ]

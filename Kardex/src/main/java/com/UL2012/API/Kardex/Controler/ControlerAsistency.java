@@ -156,32 +156,18 @@ public class ControlerAsistency {
     public ResponseEntity<?> RegisterAsistency(@PathVariable("asis") String asis){
         HttpStatus codeStatus = HttpStatus.CONFLICT;
         ResponseEntity<?> response;
-        boolean flag=true;
-            if(asis.isEmpty()){
-                flag=false;
-                msg.setCod_Msg("ERR01");
-                msg.setTitle("Vacios");
-                msg.setType("Warning");
-                msg.setMessage("Error dato vacio");
-                msg.setData("404");
-                codeStatus=HttpStatus.BAD_REQUEST;
-            } else if (asis.length()>=8) {
-                System.out.println(asis);
-                flag=false;
-                msg.setCod_Msg("ERR02");
-                msg.setTitle("Caracteres Superados");
-                msg.setType("Warning");
-                msg.setMessage("El codigo de Empleado debe ser de maximo 7 caracteres");
-                msg.setData("404");
-            }
-        if(flag){
+        if(Formats.ValidateFormat("^[A-Z]{3}[0-9]{3}$",asis)){
             //si es verdadero ejecutar la insercion
             Message fs= IAsis.RegisterAsistency(asis);
             msg=fs;
             codeStatus=msg.getCodeStatus();
+            response= new ResponseEntity<>(msg,codeStatus);
+            return response;
         }
-        response= new ResponseEntity<>(msg,codeStatus);
-        return response;
+        codeStatus = HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(msg.Get_Warning("Formato invalido para el codigo de registro",
+                "Parametro recibido es invalido",false),codeStatus);
+
     }
     @GetMapping("/Register/QRCode")
     @Operation(
