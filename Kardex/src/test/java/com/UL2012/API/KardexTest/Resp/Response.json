@@ -6,6 +6,6 @@
       "codeStatus": null,
       "data": "#string",
       "cod_Msg": "#string",
-      "flag":false
+      "flag":"#boolean"
   }
 ]

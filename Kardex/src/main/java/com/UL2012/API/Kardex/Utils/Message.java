@@ -88,7 +88,7 @@ public class Message  {
         String data;
         HttpStatus CodeStatus=HttpStatus.BAD_REQUEST;
         data = details;
-        return new Message(Code_Msg,Title,Type,Msg,data,flag);
+        return new Message(Code_Msg,Type,Title,Msg,details,false);
     }
     public  Message Get_Error(String message, String details){
         String Code_Msg="ERR01";
@@ -96,7 +96,7 @@ public class Message  {
         String Type="ERROR";
         String Msg =message;
         HttpStatus CodeStatus=HttpStatus.INTERNAL_SERVER_ERROR;
-        return new Message(Code_Msg,Title,Type,Msg,details,false);
+        return new Message(Code_Msg,Type,Title,Msg,details,false);
     }
     public  Message Get_Success(String message, String details){
         String Code_Msg="SUC01";

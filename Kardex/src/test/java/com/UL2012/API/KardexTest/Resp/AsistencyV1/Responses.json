@@ -50,7 +50,7 @@
     },
     "BadRequest": {
       "type": "#regex ^(INFO|Warning|ERROR)$",
-      "title": "#regex ^(Inesperado|Actualizar Asistencia|Headers Requeridos|Warning|ERROR)$",
+      "title": "#regex ^(Inesperado|Actualizar Asistencia|Headers Requeridos)$",
       "message": "#regex ^(Limite de caracteres exedido para codigo o peticion|.*)$",
       "flag": "#boolean",
       "codeStatus": null,
